@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!--
+Generic treemap, based on http://bost.ocks.org/mike/treemap/
+
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Zoomable treemap template</title>
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"
+    />
+
+    <!-- CSS Reset -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+    />
+
+    <!-- Milligram CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        height: 100vh;
+        background-color: #e5e5e5;
+        display: flex;  
+        flex-direction: column;
+      }
+
+      footer {
+   margin-top: auto;
+        }
+
+      #chart {
+        background: #fff;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      .title {
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        margin-top: 6px;
+        margin-bottom: 6px;
+      }
+
+      text {
+        pointer-events: none;
+      }
+
+      content {
+        margin: 50px;
+        border: solid thin darkgray;
+        padding: 50px;
+        display: block;
+        background: lightgrey;
+        text-align: center;
+      }
+
+      .grandparent text {
+        font-weight: bold;
+      }
+
+      rect {
+        fill: none;
+        stroke: #fff;
+      }
+
+      rect.parent,
+      .grandparent rect {
+        stroke-width: 2px;
+      }
+
+      rect.parent {
+        pointer-events: none;
+      }
+
+      .grandparent rect {
+        fill: orange;
+      }
+
+      .grandparent:hover rect {
+        fill: #ee9700;
+      }
+
+      .children rect.parent,
+      .grandparent rect {
+        cursor: pointer;
+      }
+
+      .children rect.parent {
+        fill: #bbb;
+        fill-opacity: 0.5;
+      }
+
+      .children:hover rect.child {
+        fill: #bbb;
+      }
+
+      form {
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body
+    id="drop_zone"
+    ondrop="dropHandler(event);"
+    ondragover="dragOverHandler(event);"
+  >
+    <form>
+      <select name="A" id="sZ">
+        <option value="name" selected>Report File</option>
+        <option value="key">Test Path</option>
+        <option value="group">test[...]</option>
+        <option value="param">...[param]</option>
+        <option value="kind">Setup/Call/Teardown</option>
+        <option value="rollup">-</option>
+      </select>
+      <select name="A" id="sA">
+        <option value="name">Report File</option>
+        <option value="key" selected>Test Path</option>
+        <option value="group">test[...]</option>
+        <option value="param">...[param]</option>
+        <option value="kind">Setup/Call/Teardown</option>
+        <option value="rollup">-</option>
+      </select>
+
+      <select name="B" id="sB">
+        <option value="name">Report File</option>
+        <option value="key">Test Path</option>
+        <option value="group" selected>test[...]</option>
+        <option value="param">...[param]</option>
+        <option value="kind">Setup/Call/Teardown</option>
+        <option value="rollup">-</option>
+      </select>
+
+      <select name="C" id="sC">
+        <option value="name">Report File</option>
+        <option value="key">Test Path</option>
+        <option value="group">test[...]</option>
+        <option value="param" selected>...[param]</option>
+        <option value="kind">Setup/Call/Teardown</option>
+        <option value="rollup">-</option>
+      </select>
+
+      <select name="D" id="sD">
+        <option value="name">Report File</option>
+        <option value="key">Test Path</option>
+        <option value="group">test[...]</option>
+        <option value="param" >...[param]</option>
+        <option value="kind" selected>Setup/Call/Teardown</option>
+        <option value="rollup" >-</option>
+      </select>
+      <button onclick="return example()">Example</button>
+    </form>
+
+    <!--| Layout
+    <select name="layout" id="layout">
+        <option value="treemapBinary">Binary</option>
+        <option value="treemapDice">Dice</option>
+        <option value="treemapSlice">Slice</option>
+        <option value="treemapSliceDice">SliceDice</option>
+        <option value="treemapSquarify">Squarify</option>
+    </select>-->
+
+    <div id="chart"></div>
+    <content>
+      <p id="tip">
+        Drag pytest json report files and select the you decomposition you like
+        above.
+      </p>
+      <p>
+        You can generate report with
+        <code>pytest --json-report --json-report-file=report.json</code>
+      </p>
+    </content>
+
+    <footer>
+        <p style='float:left;'>Author: Matthias Bussonnier</p>
+        <p style='float:right;'>GitHub: <a href='https://github.com/Carreau/pytest-json-report-viewer'>Carreau/pytest-json-report-viewer</a></p>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
