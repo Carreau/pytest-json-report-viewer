@@ -18,6 +18,39 @@ Here is a screen shot example of napari test suite time breakdown, default view:
 Removing the file in which the test are defined, summing across all 11 matrix element of github action,
 and adding a breakdown per item in `@pytest.markparametrize`:
 
-![](after_change.png)
+![](after_changing.png)
+
+
+# configure GH Action to get artifacts:
+
+Dependencies: 
+ - add `pytest-json-report` to your test suite.
+
+
+
+## Tox:
+
+If you are using tox in GHA add:
+
+```
+--json-report --json-report-file={toxinidir}/report-{envname}.json
+```
+
+## Non TOX:
+
+TODO
+
+## upload artifacts:
+
+After running the test:
+```
+- uses: actions/upload-artifact@v3
+  with:
+    name: upload pytest timing reports as json
+    path: |
+      ./report-*.json
+```
+
+You will be able to download artifacts from the test summary "artifact download" section.
 
 
